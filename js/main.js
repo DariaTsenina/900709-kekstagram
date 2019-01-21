@@ -48,7 +48,7 @@ var createPhoto = function(index) {
   return {
     url: 'photos/' + index + '.jpg',
     likes: getRandomNumber(15, 200),
-    comments: getComment(6)
+    comments: getComment(getRandomNumber(1, 5))
   };
 };
 
@@ -66,17 +66,16 @@ var photos = getPhotos(25);
 var pictures = document.querySelector('.pictures');
 var photoTemplate = document.querySelector('#picture').content.querySelector('.picture');
 
-var renderPhoto = function(photo) {
-  var photoElement = photoTemplate.cloneNode(true);
-  photoElement.querySelector('.picture__img').src = photos[i].url;
-  photoElement.querySelector('.picture__likes').textContent = photos[i].likes;
-  photoElement.querySelector('.picture__comments').textContent = photos[i].comments.length;
-
-  return photoElement;
+var renderPhotos = function(photos) {
+  var fragment = document.createDocumentFragment();
+  for (var i = 0; i < photos.length; i++) {
+    var photoElement = photoTemplate.cloneNode(true);
+    photoElement.querySelector('.picture__img').src = photos[i].url;
+    photoElement.querySelector('.picture__likes').textContent = photos[i].likes;
+    photoElement.querySelector('.picture__comments').textContent = photos[i].comments.length;
+    fragment.appendChild(photoElement);  
+  }
+  pictures.appendChild(fragment);
 }
 
-var fragment = document.createDocumentFragment();
-for (var i = 0; i < photos.length; i++) {
-  fragment.appendChild(renderPhoto(photos[i]));
-}
-pictures.appendChild(fragment);
+renderPhotos(photos); 
