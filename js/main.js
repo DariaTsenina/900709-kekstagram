@@ -26,22 +26,29 @@ var NAME_ARRAY = [
 ]
 
 // создание массива комментариев
-var getComment = function() {
+var createComment = function() {
   var comment = {
-    avatar: 'img/avatar-' + getRandomNumber(1, 6) + '.svg',
-    message: MESSAGE_ARRAY[getRandomNumber(1, 6)],
-    name: NAME_ARRAY[getRandomNumber(1, 6)]
+    avatar: 'img/avatar-' + getRandomNumber(0, 5) + '.svg',
+    message: MESSAGE_ARRAY[getRandomNumber(0, 5)],
+    name: NAME_ARRAY[getRandomNumber(0, 5)]
   }
   return comment;
 
 };
 
+var getComment = function(length) {
+  var comments = []
+  for (var i = 1; i <= length; i++) {
+    comments.push(createComment(i))
+  }
+  return comments; 
+};
 
 var createPhoto = function(index) {
   return {
     url: 'photos/' + index + '.jpg',
-    likes: getRandomNumber(0, 250),
-    comments: getComment()
+    likes: getRandomNumber(15, 200),
+    comments: getComment(6)
   };
 };
 
@@ -63,7 +70,7 @@ var renderPhoto = function(photo) {
   var photoElement = photoTemplate.cloneNode(true);
   photoElement.querySelector('.picture__img').src = photos[i].url;
   photoElement.querySelector('.picture__likes').textContent = photos[i].likes;
-  photoElement.querySelector('.picture__comments').textContent = photos[i].comments;
+  photoElement.querySelector('.picture__comments').textContent = photos[i].comments.length;
 
   return photoElement;
 }
