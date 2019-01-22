@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм» [![Build status][travis-image]][travis-url]
 
 * Студент: [Дарья Шамова](https://up.htmlacademy.ru/javascript/16/user/900709).
-* Наставник: `Евгений Фаллер`.
+* Наставник: `Дмитрий Шамрило`.
 
 ---
 
