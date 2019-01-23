@@ -1,6 +1,6 @@
 'use strict';
 
-// получение рандомного числа
+// Получение рандомного числа
 var getRandomNumber = function (min, max) {
   var randomNumber = min - 0.5 + Math.random() * (max - min + 1);
   randomNumber = Math.round(randomNumber);
@@ -25,7 +25,7 @@ var NAME_ARRAY = [
   'Варфоломей'
 ];
 
-// создание массива комментариев
+// Создание массива комментариев
 var createComment = function () {
   var comment = {
     avatar: 'img/avatar-' + getRandomNumber(0, 5) + '.svg',
@@ -66,7 +66,6 @@ var photos = getPhotos(25);
 var pictures = document.querySelector('.pictures');
 var photoTemplate = document.querySelector('#picture').content.querySelector('.picture');
 
-// eslint-disable-next-line no-shadow
 var renderPhotos = function () {
   var fragment = document.createDocumentFragment();
   for (var i = 0; i < photos.length; i++) {
@@ -80,3 +79,45 @@ var renderPhotos = function () {
 };
 
 renderPhotos(photos);
+
+// Загрузка нового изображения на сайт
+var imgForm = document.querySelector('.img-upload__overlay');
+var uploadFile = document.querySelector('#upload-file');
+var uploadCancel = document.querySelector('#upload-cancel');
+var ESC_KEYCODE = 27;
+
+uploadFile.addEventListener('change', function () {
+  imgForm.classList.remove('hidden');
+  document.addEventListener('keydown', function (evt) {
+    if (evt.keyCode === ESC_KEYCODE) {
+      imgForm.classList.add('hidden');
+      uploadFile.value = '';
+    }
+  });
+});
+
+uploadCancel.addEventListener('click', function () {
+  imgForm.classList.add('hidden');
+  uploadFile.value = '';
+});
+
+// Наложение эффекта на изображение
+var effects = document.querySelector('.effects');
+var preview = document.querySelector('.img-upload__preview');
+
+effects.addEventListener('change', function (event) {
+  var target = event.target;
+  preview.classList.add('effects__preview--' + target.value);
+});
+
+// Изменение уровня насыщенности фильтра
+var effectLevelPin = document.querySelector('.effect-level__pin');
+var effectLevelValue = document.querySelector('.effect-level__value');
+
+
+effectLevelPin.addEventListener('mouseup', function () {
+  effectLevelValue.value = effectLevelPin.style.left;
+  console.log(effectLevelPin.style);
+});
+
+
