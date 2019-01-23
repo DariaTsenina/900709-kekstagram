@@ -103,21 +103,26 @@ uploadCancel.addEventListener('click', function () {
 
 // Наложение эффекта на изображение
 var effects = document.querySelector('.effects');
-var preview = document.querySelector('.img-upload__preview');
+var preview = document.querySelector('.img-upload__preview > img');
+var effectLevelPin = document.querySelector('.effect-level__pin');
+var effectLevelValue = document.querySelector('.effect-level__value');
+var chrome = document.querySelector('.effects__preview--chrome');
+var sepia = document.querySelector('.effects__preview--chrome');
 
 effects.addEventListener('change', function (event) {
   var target = event.target;
-  preview.classList.add('effects__preview--' + target.value);
+  preview.className = 'effects__preview--' + target.value;
+
+  // Изменение уровня насыщенности фильтра
+  effectLevelPin.addEventListener('mouseup', function () {
+    if (target.value = chrome) {
+      preview.setAttribute('style', 'filter: grayscale(effectLevelValue.value / 100);');
+    }
+    if (target.value = sepia) {
+      preview.setAttribute('style', 'filter: sepia(effectLevelValue.value / 100);');
+    }
+  });
 });
 
-// Изменение уровня насыщенности фильтра
-var effectLevelPin = document.querySelector('.effect-level__pin');
-var effectLevelValue = document.querySelector('.effect-level__value');
-
-
-effectLevelPin.addEventListener('mouseup', function () {
-  effectLevelValue.value = effectLevelPin.style.left;
-  console.log(effectLevelPin.style);
-});
 
 
