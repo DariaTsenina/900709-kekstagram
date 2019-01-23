@@ -86,8 +86,10 @@ var uploadFile = document.querySelector('#upload-file');
 var uploadCancel = document.querySelector('#upload-cancel');
 var ESC_KEYCODE = 27;
 
+// Открытие/закрытие окна редактирования
 uploadFile.addEventListener('change', function () {
   imgForm.classList.remove('hidden');
+  effectLevel.classList.add('hidden');
   document.addEventListener('keydown', function (evt) {
     if (evt.keyCode === ESC_KEYCODE) {
       imgForm.classList.add('hidden');
@@ -101,28 +103,95 @@ uploadCancel.addEventListener('click', function () {
   uploadFile.value = '';
 });
 
-// Наложение эффекта на изображение
+// Переменные для наложения эффекта на изображение
 var effects = document.querySelector('.effects');
 var preview = document.querySelector('.img-upload__preview > img');
 var effectLevelPin = document.querySelector('.effect-level__pin');
+var effectLevelDepth = document.querySelector('.effect-level__depth');
 var effectLevelValue = document.querySelector('.effect-level__value');
-var chrome = document.querySelector('.effects__preview--chrome');
-var sepia = document.querySelector('.effects__preview--chrome');
+var effectLevel = document.querySelector('.effect-level');
+var pinScale = effectLevelValue.value;
+
+
+// Функция расчета интенсивности эффекта
+function effectCalc(min, max) {
+  return (max - min) * (pinScale / 100);
+}
+
 
 effects.addEventListener('change', function (event) {
   var target = event.target;
-  preview.className = 'effects__preview--' + target.value;
+  var effect = target.value;
+  preview.className = 'effects__preview--' + effect;
+  preview.removeAttribute('style');
+  effectLevelPin.style.left = '100%';
+  effectLevelDepth.style.width = '100%';
+  pinScale = 100;
+  scaleValue.value = '100%';
+
+  if (effect === 'none') {
+    effectLevel.classList.add('hidden');
+  } else {
+    effectLevel.classList.remove('hidden');
+  }
 
   // Изменение уровня насыщенности фильтра
   effectLevelPin.addEventListener('mouseup', function () {
-    if (target.value = chrome) {
-      preview.setAttribute('style', 'filter: grayscale(effectLevelValue.value / 100);');
-    }
-    if (target.value = sepia) {
-      preview.setAttribute('style', 'filter: sepia(effectLevelValue.value / 100);');
+    if (effect === 'chrome') {
+      var effectScale = effectCalc(0, 1);
+      preview.setAttribute('style', 'filter: grayscale(' + effectScale + ')');
+    } else if (effect === 'sepia') {
+      effectScale = effectCalc(0, 1);
+      preview.setAttribute('style', 'filter: sepia(' + effectScale + ')');
+    } else if (effect === 'marvin') {
+      effectScale = effectCalc(0, 100);
+      preview.setAttribute('style', 'filter: invert(' + effectScale + '%)');
+    } else if (effect === 'phobos') {
+      effectScale = effectCalc(0, 3);
+      preview.setAttribute('style', 'filter: blur(' + effectScale + 'px)');
+    } else {
+      effectScale = effectCalc(1, 3);
+      preview.setAttribute('style', 'filter: brightness(' + effectScale + ')');
     }
   });
+
 });
 
+// Масштаб изображения
+var scaleValue = document.querySelector('.scale__control--value');
+var buttonSmaller = document.querySelector('.scale__control--smaller');
+var buttonBigger = document.querySelector('.scale__control--bigger');
+
+scaleValue.value = '100%';
+
+buttonSmaller.addEventListener('click', function () {
+  if (scaleValue.value === '100%') {
+    preview.style.transform = 'scale(0.75)';
+    scaleValue.value = '75%';
+  } else if (scaleValue.value === '75%') {
+    preview.style.transform = 'scale(0.5)';
+    scaleValue.value = '50%';
+  } else if (scaleValue.value === '50%') {
+    preview.style.transform = 'scale(0.25)';
+    scaleValue.value = '25%';
+  }
+
+  return scaleValue;
+});
+
+buttonBigger.addEventListener('click', function () {
+  if (scaleValue.value === '25%') {
+    preview.style.transform = 'scale(0.5)';
+    scaleValue.value = '50%';
+  } else if (scaleValue.value === '50%') {
+    preview.style.transform = 'scale(0.75)';
+    scaleValue.value = '75%';
+  } else if (scaleValue.value === '75%') {
+    preview.style.transform = 'scale(1)';
+    scaleValue.value = '100%';
+  }
+
+  return scaleValue;
+});
 
 
