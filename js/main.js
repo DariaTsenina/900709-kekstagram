@@ -139,8 +139,6 @@ buttonSmaller.addEventListener('click', function () {
     preview.style.transform = 'scale(0.25)';
     scaleValue.value = '25%';
   }
-
-  return scaleValue;
 });
 
 buttonBigger.addEventListener('click', function () {
@@ -154,8 +152,6 @@ buttonBigger.addEventListener('click', function () {
     preview.style.transform = 'scale(1)';
     scaleValue.value = '100%';
   }
-
-  return scaleValue;
 });
 
 
