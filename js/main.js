@@ -86,22 +86,29 @@ var uploadFile = document.querySelector('#upload-file');
 var uploadCancel = document.querySelector('#upload-cancel');
 var ESC_KEYCODE = 27;
 
-// Открытие/закрытие окна редактирования
+// Открытие формы загрузки фото
 uploadFile.addEventListener('change', function () {
   imgForm.classList.remove('hidden');
   effectLevel.classList.add('hidden');
-  document.addEventListener('keydown', function (evt) {
-    if (evt.keyCode === ESC_KEYCODE) {
-      imgForm.classList.add('hidden');
-      uploadFile.value = '';
-    }
-  });
+
+  uploadCancel.addEventListener('click', closeUpload);
+  document.addEventListener('keydown', closeUploadEsc);
+
 });
 
-uploadCancel.addEventListener('click', function () {
+// Закрытие формы загрузки фото
+function closeUpload() {
   imgForm.classList.add('hidden');
+  uploadCancel.removeEventListener('click', closeUpload);
+  document.removeEventListener('keydown', closeUploadEsc);
   uploadFile.value = '';
-});
+}
+
+function closeUploadEsc(evt) {
+  if (evt.keyCode === ESC_KEYCODE) {
+    closeUpload();
+  }
+}
 
 // Переменные для наложения эффекта на изображение и изменения масштаба
 var PIN_MAX_LEVEL = 100;
@@ -233,3 +240,24 @@ effects.addEventListener('change', function (event) {
 
 });
 
+
+// Отмена закрытия формы при активных полях
+
+var commentTextArea = document.querySelector('.text__description');
+var hashtags = document.querySelector('.text__hashtags');
+
+hashtags.onfocus = function () {
+  document.removeEventListener('keydown', closeUploadEsc);
+};
+
+hashtags.onblur = function () {
+  document.addEventListener('keydown', closeUploadEsc);
+};
+
+commentTextArea.onfocus = function () {
+  document.removeEventListener('keydown', closeUploadEsc);
+};
+
+commentTextArea.onblur = function () {
+  document.addEventListener('keydown', closeUploadEsc);
+};
