@@ -120,6 +120,7 @@ var effectLevelPin = document.querySelector('.effect-level__pin');
 var levelLine = document.querySelector('.effect-level__line');
 var effectLevelDepth = document.querySelector('.effect-level__depth');
 var effectLevel = document.querySelector('.effect-level');
+var effectLevelValue = document.querySelector('.effect-level__value');
 
 // Масштаб изображения
 var scaleValue = document.querySelector('.scale__control--value');
@@ -178,7 +179,7 @@ effectLevelPin.addEventListener('mousedown', function (evt) {
 
     effectLevelPin.style.left = level + '%';
     effectLevelDepth.style.width = level + '%';
-    return level;
+    effectLevelValue.value = level;
 
   };
 
@@ -195,9 +196,9 @@ effectLevelPin.addEventListener('mousedown', function (evt) {
 
 // Функция расчета интенсивности эффекта
 var effectCalc = function (min, max) {
-  return min + (max - min) * (level / 100);
+  return min + (max - min) * (effectLevelValue.value / 100);
 };
-var level = 20;
+
 // Изменение фильтра
 effects.addEventListener('change', function (event) {
   var target = event.target;
@@ -215,7 +216,7 @@ effects.addEventListener('change', function (event) {
   }
 
   // Изменение уровня насыщенности фильтра
-  effectLevelPin.addEventListener('mouseup', function () {
+  effectLevelPin.addEventListener('mousemove', function () {
     if (effect === 'chrome') {
       var effectScale = effectCalc(0, 1);
       preview.setAttribute('style', 'filter: grayscale(' + effectScale + ')');
