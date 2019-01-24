@@ -112,7 +112,6 @@ var preview = document.querySelector('.img-upload__preview > img');
 var effectLevelPin = document.querySelector('.effect-level__pin');
 var levelLine = document.querySelector('.effect-level__line');
 var effectLevelDepth = document.querySelector('.effect-level__depth');
-var effectLevelValue = document.querySelector('.effect-level__value');
 var effectLevel = document.querySelector('.effect-level');
 
 // Масштаб изображения
@@ -195,7 +194,7 @@ effectLevelPin.addEventListener('mousedown', function (evt) {
 var effectCalc = function (min, max) {
   return min + (max - min) * (level / 100);
 };
-
+var level = 20;
 // Изменение фильтра
 effects.addEventListener('change', function (event) {
   var target = event.target;
