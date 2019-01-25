@@ -1,21 +1,22 @@
 'use strict';
 
 (function () {
-    var main = document.querySelector('main');
+  var main = document.querySelector('main');
+  var uploadOverlay = document.querySelector('.img-upload__overlay');
 
-  // ------------------------------------------------------------------------------------------------
+
   window.formUploadPhoto.addEventListener('submit', function (evt) {
+    window.upload(new FormData(window.formUploadPhoto), function () {
       uploadOverlay.classList.add('hidden');
       openSuccessMessage();
-      function () {
+    }, function () {
       uploadOverlay.classList.add('hidden');
       openErrorMessage();
     });
 
     evt.preventDefault();
   });
-  // ------------------------------------------------------------------------------------------------
-  // ОКНО УСПЕШНОЙ ЗАГРУЗКИ ФОТО
+
   // открытие окна успешной загрузки
   function openSuccessMessage() {
     var successTemplate = document.querySelector('#success').content;
@@ -41,13 +42,13 @@
   }
 
   function closeMessageSuccessEsc(evt) {
-    if (evt.keyCode === ESC_KEYCODE) {
+    if (evt.keyCode === window.ESC_KEYCODE) {
       closeMessageSuccess();
     }
   }
 
-  // ------------------------------------------------------------------------------------------------
-  // ОКНО ОШИБКИ ЗАГРУЗКИ ФОТО
+
+  // Окно ошибки загрузки фото
   function openErrorMessage() {
     var errorTemplate = document.querySelector('#error').content;
     var errorMessage = errorTemplate.cloneNode(true);
@@ -76,8 +77,10 @@
   }
 
   function closeErrorMessageEsc(evt) {
-    if (evt.keyCode === ESC_KEYCODE) {
+    if (evt.keyCode === window.ESC_KEYCODE) {
       closeMessageSuccess();
     }
   }
+
+
 })();
