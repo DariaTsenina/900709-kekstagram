@@ -1,11 +1,15 @@
 'use strict';
 
 (function () {
+
+  var PIN_MAX_LEVEL = 100;
+  var PIN_MIN_LEVEL = 0;
+  var ESC_KEYCODE = 27;
+
   // Загрузка нового изображения на сайт
   var imgForm = document.querySelector('.img-upload__overlay');
   var uploadFile = document.querySelector('#upload-file');
   var uploadCancel = document.querySelector('#upload-cancel');
-  var ESC_KEYCODE = 27;
 
   // Открытие формы загрузки фото
   uploadFile.addEventListener('change', function () {
@@ -32,8 +36,6 @@
   }
 
   // Переменные для наложения эффекта на изображение и изменения масштаба
-  var PIN_MAX_LEVEL = 100;
-  var PIN_MIN_LEVEL = 0;
 
   var effects = document.querySelector('.effects');
   var preview = document.querySelector('.img-upload__preview > img');
@@ -178,6 +180,8 @@
   commentTextArea.onblur = function () {
     document.addEventListener('keydown', closeUploadEsc);
   };
+
+  window.ESC_KEYCODE = ESC_KEYCODE;
 })();
 
 
