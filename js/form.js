@@ -131,6 +131,7 @@
     effectLevelPin.style.left = '100%';
     effectLevelDepth.style.width = '100%';
     scaleValue.value = '100%';
+    effectLevelValue.value = 100;
 
     if (effect === 'none') {
       effectLevel.classList.add('hidden');

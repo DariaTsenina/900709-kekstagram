@@ -63,8 +63,48 @@
 
   var photos = getPhotos(25);
 
+    // Создание DOM-элементов
+var pictures = document.querySelector('.pictures');
+var photoTemplate = document.querySelector('#picture').content.querySelector('.picture');
+
+var renderPhotos = function() {
+  var photoElement = photoTemplate.cloneNode(true);
+  photoElement.querySelector('.picture__img').src = photos[i].url;
+  photoElement.querySelector('.picture__likes').textContent = photos[i].likes;
+  photoElement.querySelector('.picture__comments').textContent = photos[i].comments.length;
+
+  return photoElement;
+}
+
+var fragment = document.createDocumentFragment();
+for (var i = 0; i < photos.length; i++) {
+  fragment.appendChild(renderPhotos(photos[i]));
+}
+pictures.appendChild(fragment);
+
   // Создание DOM-элементов
   var pictures = document.querySelector('.pictures');
+  var photoTemplate = document.querySelector('#picture').content.querySelector('.picture');
+  
+  var renderPhotos = function() {
+    var photoElement = photoTemplate.cloneNode(true);
+    photoElement.querySelector('.picture__img').src = photos[i].url;
+    photoElement.querySelector('.picture__likes').textContent = photos[i].likes;
+    photoElement.querySelector('.picture__comments').textContent = photos[i].comments.length;
+  
+    return photoElement;
+  }
+ 
+  window.loadData(function () {
+  var fragment = document.createDocumentFragment();
+  for (var i = 0; i < photos.length; i++) {
+    fragment.appendChild(renderPhotos(photos[i]));
+  }
+  pictures.appendChild(fragment);
+});
+
+  // Создание DOM-элементов
+ /* var pictures = document.querySelector('.pictures');
   var photoTemplate = document.querySelector('#picture').content.querySelector('.picture');
 
   var renderPhotos = function () {
@@ -79,5 +119,6 @@
     pictures.appendChild(fragment);
   };
 
-  renderPhotos(photos);
+  renderPhotos(); */
+
 })();
